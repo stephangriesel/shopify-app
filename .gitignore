@@ -1,4 +1,8 @@
 notes.txt
 node_modules/*
 .next/*
+*.next/*.*
 .env
+.next/build-manifest.json
+.next/static/chunks/webpack.js
+.next/static/development/_buildManifest.js
