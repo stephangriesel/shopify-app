@@ -29,4 +29,27 @@ query getProducts($ids: [ID!]!) {
       }
     }
   }
-`
+`;
+
+function ProductList() {
+
+  const { loading, error, data } = useQuery(GET_PRODUCTS_BY_ID, { variables: { ids: store.get('ids') } })
+
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>{error.message}</div>
+
+  console.log('this is data', data)
+
+  return (
+    <div>
+      <h1>Your Selected Products</h1>
+      {data.nodes.map(item => {
+        return (
+          <p key={item.id}>{item.title}</p>
+        )
+      })}
+    </div>
+  )
+}
+
+export default ProductList;
