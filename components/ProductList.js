@@ -63,6 +63,28 @@ function ProductList() {
                   item.images.edges[0] ? item.images.edges[0].altText : ''
                 }
               />
+            );
+            const price = item.variants.edges[0].node.price;
+            return (
+              <ResourceList.Item
+                id={item.id}
+                media={media}
+                accessibilityLabel={`View more for ${item.title}`}
+              >
+                {/* https://polaris.shopify.com/components/structure/stack */}
+                <Stack>
+                  <Stack.Item fill>
+                    <h3>
+                      <TextStyle variation='strong'>
+                        {item.title}
+                      </TextStyle>
+                    </h3>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <p>€{price}</p>
+                  </Stack.Item>
+                </Stack>
+              </ResourceList.Item>
             )
           }}
         />
