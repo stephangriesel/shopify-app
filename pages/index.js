@@ -30,8 +30,8 @@ function Index() {
                 onCancel={() => setModal({ open: false })}
                 onSelection={(resources) => handleSection(resources)}
             />
-            <Layout>
-                {emptyState ?
+            {emptyState ?
+                <Layout>
                     <EmptyState
                         heading="Manage your products"
                         action={{
@@ -43,10 +43,10 @@ function Index() {
                     >
                         <p>Select Products</p>
                     </EmptyState>
-                    :
-                    <ProductList />
-                }
-            </Layout>
+                </Layout>
+                :
+                <ProductList />
+            }
         </Page>
     )
 }

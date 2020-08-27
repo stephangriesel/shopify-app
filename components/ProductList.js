@@ -42,12 +42,31 @@ function ProductList() {
 
   return (
     <div>
-      <h1>Your Selected Products</h1>
+      {/* <h1>Your Selected Products</h1>
       {data.nodes.map(item => {
         return (
           <p key={item.id}>{item.title}</p>
         )
-      })}
+      })} */}
+      <Card>
+        <ResourceList
+          showHeader
+          resourceName={{ singular: 'Product', plural: 'Products' }}
+          items={data.nodes}
+          renderItem={item => {
+            const media = (
+              <Thumbnail
+                source={
+                  item.images.edges[0] ? item.images.edges[0].node.originalSrc : ''
+                }
+                alt={
+                  item.images.edges[0] ? item.images.edges[0].altText : ''
+                }
+              />
+            )
+          }}
+        />
+      </Card>
     </div>
   )
 }
