@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { Button, Card, Layout, Page, ResourceList, Stack } from "@shopify/polaris";
 
 const CREATE_SCRIPT_TAG = gql`
 mutation scriptTagCreate($input: ScriptTagInput!) {
@@ -53,39 +54,103 @@ function ScriptPage() {
   console.log('script data', data);
 
   return (
-    <div>
-      <h1>script tag test</h1>
-      <button
-        type="submit" onClick={() => {
-          createScripts({
-            variables: {
-              input: {
-                src: "https://839ce044ac0d.ngrok.io/test-script.js",
-                displayScope: "ALL"
-              }
-            },
-            refetchQueries: [{ query: QUERY_SCRIPTTAGS }]
-          })
-        }}
-      >Create Script Tag</button>
-      {data.scriptTags.edges.map(item => {
-        return (
-          <div key={item.node.id}>
-            <p>{item.node.id}</p>
-            <button type="submit" onClick={() => {
-              deleteScripts({
+    <Page>
+      <Layout>
+        <Layout.Section>
+          <Card title="Script Tags" sectioned>
+            <p>Create/Delete Script Tag</p>
+          </Card>
+        </Layout.Section>
+      </Layout>
+      <Layout.Section secondary>
+        <Card title="Delete" sectioned>
+          <Button
+            primary
+            size="slim"
+            type="submit" onClick={() => {
+              createScripts({
                 variables: {
-                  id: item.node.id
+                  input: {
+                    src: "https://6b2dfb346d5f.ngrok.io/test-script.js",
+                    displayScope: "ALL"
+                  }
                 },
                 refetchQueries: [{ query: QUERY_SCRIPTTAGS }]
               })
-            }}>
-              Delete Script Tag
-            </button>
-          </div>
-        )
-      })}
-    </div>
+            }}
+          >New Tag</Button>
+        </Card>
+      </Layout.Section>
+      <Layout.Section>
+        <Card>
+          <ResourceList
+            showHeader
+            resourceName={{ singular: 'Script', plural: 'Scripts' }}
+            items={data.scriptTags.edges}
+            renderItem={item => {
+              return (
+                <ResourceList.Item
+                  id={item.id}
+                >
+                  <Stack>
+                    <Stack.Item>
+                      <p>
+                        {item.node.id}
+                      </p>
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button type='submit' onClick={() => {
+                        deleteScripts({
+                          variables: {
+                            id: item.node.id
+                          },
+                          refetchQueries: [{ query: QUERY_SCRIPTTAGS }]
+                        })
+                      }}>
+                        X
+                      </Button>
+                    </Stack.Item>
+                  </Stack>
+                </ResourceList.Item>
+              )
+            }}
+          />
+        </Card>
+      </Layout.Section>
+    </Page>
+    // <div>
+    //   <h1>script tag test</h1>
+    //   <button
+    //     type="submit" onClick={() => {
+    //       createScripts({
+    //         variables: {
+    //           input: {
+    //             src: "https://6b2dfb346d5f.ngrok.io/test-script.js",
+    //             displayScope: "ALL"
+    //           }
+    //         },
+    //         refetchQueries: [{ query: QUERY_SCRIPTTAGS }]
+    //       })
+    //     }}
+    //   >Create Script Tag</button>
+    //   {data.scriptTags.edges.map(item => {
+    //     return (
+    //       <div key={item.node.id}>
+    //         <p>{item.node.id}</p>
+    //         <button type="submit" onClick={() => {
+    //           deleteScripts({
+    //             variables: {
+    //               id: item.node.id
+    //             },
+    //             refetchQueries: [{ query: QUERY_SCRIPTTAGS }]
+    //           })
+    //         }}>
+    //           Delete Script Tag
+    //         </button>
+    //       </div>
+    //     )
+    //   })}
+    // </div>
   )
 }
 
