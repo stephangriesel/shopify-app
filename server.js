@@ -3,6 +3,7 @@ const Koa = require('koa');
 const next = require('next');
 const { default: createShopifyAuth } = require('@shopify/koa-shopify-auth');
 const dotenv = require('dotenv');
+const KoaRouter = require('koa-router');
 const { verifyRequest } = require('@shopify/koa-shopify-auth');
 const session = require('koa-session');
 
@@ -15,10 +16,30 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const server = new Koa();
 const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY } = process.env;
 
+const router = new KoaRouter();
+
+// CTX is the context object in Koa
+router.get('/api/products', async (ctx) => {
+    try {
+        ctx.body = {
+            status: 'success',
+            data: 'Test Public API'
+        };
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
+
+// Router Middlewear
+server.use(router.allowedMethods());
+server.use(router.routes());
+
 app.prepare().then(() => {
-    const server = new Koa();
+
     server.use(session({ sameSite: 'none', secure: true }, server));
     server.keys = [SHOPIFY_API_SECRET_KEY];
 
@@ -48,6 +69,9 @@ app.prepare().then(() => {
 
     server.use(graphQLProxy({ version: ApiVersion.October19 })); // version changes every 6 months, review if needed
     server.use(verifyRequest());
+
+
+
     server.use(async (ctx) => {
         await handle(ctx.req, ctx.res);
         ctx.respond = false;
