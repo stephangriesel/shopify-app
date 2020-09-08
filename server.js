@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const KoaRouter = require('koa-router');
 const { verifyRequest } = require('@shopify/koa-shopify-auth');
 const session = require('koa-session');
+const koaBody = require('koa-body');
 
 dotenv.config();
 const { default: graphQLProxy, ApiVersion } = require('@shopify/koa-shopify-graphql-proxy');
@@ -21,16 +22,32 @@ const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY } = process.env;
 
 const router = new KoaRouter();
 
+const products = [
+    {
+        'image1': 'test'
+    }
+];
+
 // CTX is the context object in Koa
 router.get('/api/products', async (ctx) => {
     try {
         ctx.body = {
             status: 'success',
-            data: 'Test Public API'
+            data: products
         };
     }
     catch (err) {
         console.log(err);
+    }
+})
+
+router.post('/api/products', koaBody(), async (ctx) => {
+    try {
+        const body = ctx.request.body;
+        products.push(body);
+        ctx.body = "Item Added";
+    } catch (error) {
+        console.log(error)
     }
 })
 
