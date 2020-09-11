@@ -22,10 +22,8 @@ const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY } = process.env;
 
 const router = new KoaRouter();
 
-const products = [
-    {
-        'image1': 'test'
-    }
+let products = [
+
 ];
 
 // CTX is the context object in Koa
@@ -46,6 +44,15 @@ router.post('/api/products', koaBody(), async (ctx) => {
         const body = ctx.request.body;
         products.push(body);
         ctx.body = "Item Added";
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+router.delete('/api/products', koaBody(), async (ctx) => {
+    try {
+        products = [];
+        ctx.body = 'Items Removed';
     } catch (error) {
         console.log(error)
     }

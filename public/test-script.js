@@ -7,10 +7,10 @@ const makeHeader = data => {
 }
 
 
-fetch('https://cors-anywhere.herokuapp.com/https://890cb54f870a.ngrok.io/api/products?shop=de-mondkapje.myshopify.com')
+fetch('https://cors-anywhere.herokuapp.com/https://cc5983061f22.ngrok.io/api/products?=shop=de-mondkapje.myshopify.com')
     .then(res => res.json())
     .then(data => {
         console.log(data, 'data test for server')
-        makeHeader(data.data)
+        // makeHeader(data.data)
     })
     .catch(error => console.log(error));
