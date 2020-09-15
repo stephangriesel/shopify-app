@@ -71,7 +71,7 @@ function ScriptPage() {
               createScripts({
                 variables: {
                   input: {
-                    src: "https://6ddf7ee84b03.ngrok.io/test-script.js",
+                    src: "https://bf59b07faeec.ngrok.io/test-script.js",
                     displayScope: "ALL"
                   }
                 },
@@ -118,39 +118,6 @@ function ScriptPage() {
         </Card>
       </Layout.Section>
     </Page>
-    // <div>
-    //   <h1>script tag test</h1>
-    //   <button
-    //     type="submit" onClick={() => {
-    //       createScripts({
-    //         variables: {
-    //           input: {
-    //             src: "https://6b2dfb346d5f.ngrok.io/test-script.js",
-    //             displayScope: "ALL"
-    //           }
-    //         },
-    //         refetchQueries: [{ query: QUERY_SCRIPTTAGS }]
-    //       })
-    //     }}
-    //   >Create Script Tag</button>
-    //   {data.scriptTags.edges.map(item => {
-    //     return (
-    //       <div key={item.node.id}>
-    //         <p>{item.node.id}</p>
-    //         <button type="submit" onClick={() => {
-    //           deleteScripts({
-    //             variables: {
-    //               id: item.node.id
-    //             },
-    //             refetchQueries: [{ query: QUERY_SCRIPTTAGS }]
-    //           })
-    //         }}>
-    //           Delete Script Tag
-    //         </button>
-    //       </div>
-    //     )
-    //   })}
-    // </div>
   )
 }
 
