@@ -71,7 +71,7 @@ function ScriptPage() {
               createScripts({
                 variables: {
                   input: {
-                    src: "https://bf59b07faeec.ngrok.io/test-script.js",
+                    src: "https://63fb4eb8316c.ngrok.io/test-script.js",
                     displayScope: "ALL"
                   }
                 },

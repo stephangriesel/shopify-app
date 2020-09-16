@@ -9,12 +9,19 @@ body.css({
 const shop = Shopify.shop;
 
 const makeApp = products => {
+
     const bestSellerContainer = $(
-        `<div>
-            <h3>Best Sellers</h3>
+        `<div style="overflow-y: scroll;text-align:center;">
+            <h3 style="font-family: Arial, Helvetica, sans-serif; margin:0;padding:10px 0;font-weight:bold;">Best Sellers</h3>
             ${products.map(item => {
             return `
-                <p>${item.title}</p>
+            <a href="/products/${item.handle}" style="display:flex; align-items: center;padding:20px 10px; border-top:1px solid black;">
+            <img src=${item.images[0].originalSrc} style="width:75px;" />        
+            <div style="display:flex; justify-content: space-between; align-items:start;width:100%;">
+            <p style="padding: 0 10px;">${item.title}</p>
+            <p style="font-weight:bold">$${item.variants[0].price}</p>
+            </div>
+            </a>
                 `
         }).join('')
         }
@@ -48,7 +55,7 @@ const makeApp = products => {
     })
 }
 
-fetch('https://cors-anywhere.herokuapp.com/https://bf59b07faeec.ngrok.io/api/products?=shop=de-mondkapje.myshopify.com')
+fetch('https://cors-anywhere.herokuapp.com/https://63fb4eb8316c.ngrok.io/api/products?=shop=de-mondkapje.myshopify.com')
     .then(res => res.json())
     .then(data => {
         console.log(data, 'data test for server')
